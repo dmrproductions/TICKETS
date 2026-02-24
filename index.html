@@ -58,6 +58,25 @@
             background: rgba(0,0,0,0.9);
             backdrop-filter: blur(10px);
         }
+
+        /* Form styles */
+        .form-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            transition: all 0.3s;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #f59e0b;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Comp ticket styles */
+        .comp-card {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(168, 85, 247, 0.1));
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -111,6 +130,10 @@
                     <button onclick="switchView('live-sales')" class="nav-btn active px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
                         <i class="fas fa-shopping-cart"></i><span>Live Sales</span>
                         <span class="w-2 h-2 rounded-full bg-green-500 live-indicator"></span>
+                    </button>
+                    <button onclick="switchView('comps')" class="nav-btn px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
+                        <i class="fas fa-gift"></i><span>Comp List</span>
+                        <span id="comps-badge" class="hidden px-2 py-0.5 rounded-full bg-amber-500 text-black text-xs font-bold">0</span>
                     </button>
                     <button onclick="switchView('media')" class="nav-btn px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
                         <i class="fas fa-newspaper"></i><span>Media</span>
@@ -217,6 +240,59 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Media Registration Section - RESTORED -->
+                    <div class="glass-panel rounded-2xl p-6 border border-blue-500/30 bg-blue-500/5" id="media-signup">
+                        <div class="flex items-center space-x-3 mb-4">
+                            <i class="fas fa-newspaper text-blue-400 text-2xl"></i>
+                            <h2 class="text-xl font-display font-bold text-blue-400">Media Registration</h2>
+                        </div>
+                        <p class="text-gray-300 mb-4 text-sm">
+                            Are you a member of the press, blogger, or content creator? Apply for media credentials to get early access and exclusive coverage opportunities.
+                        </p>
+                        
+                        <form id="media-form" class="space-y-4" onsubmit="submitMediaForm(event)">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs text-gray-400 mb-1">Full Name *</label>
+                                    <input type="text" name="name" required class="w-full form-input rounded-lg px-4 py-2 text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-gray-400 mb-1">Email *</label>
+                                    <input type="email" name="email" required class="w-full form-input rounded-lg px-4 py-2 text-sm">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs text-gray-400 mb-1">Outlet/Publication *</label>
+                                    <input type="text" name="outlet" required class="w-full form-input rounded-lg px-4 py-2 text-sm" placeholder="e.g., Sacramento Bee, Fashion Blog">
+                                </div>
+                                <div>
+                                    <label class="block text-xs text-gray-400 mb-1">Role *</label>
+                                    <select name="role" required class="w-full form-input rounded-lg px-4 py-2 text-sm">
+                                        <option value="">Select Role</option>
+                                        <option value="Journalist">Journalist/Writer</option>
+                                        <option value="Photographer">Photographer</option>
+                                        <option value="Videographer">Videographer</option>
+                                        <option value="Blogger">Blogger/Influencer</option>
+                                        <option value="Editor">Editor</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs text-gray-400 mb-1">Website/Social Media</label>
+                                <input type="url" name="website" class="w-full form-input rounded-lg px-4 py-2 text-sm" placeholder="https://...">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-gray-400 mb-1">Previous Coverage Examples</label>
+                                <textarea name="examples" rows="3" class="w-full form-input rounded-lg px-4 py-2 text-sm" placeholder="Links to previous fashion or event coverage..."></textarea>
+                            </div>
+                            <button type="submit" class="w-full py-3 rounded-lg font-bold text-center bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white transition-all">
+                                <i class="fas fa-paper-plane mr-2"></i> Submit Media Application
+                            </button>
+                        </form>
                     </div>
 
                     <!-- Featured Collections -->
@@ -346,14 +422,16 @@
                                 </button>
                             </div>
 
-                            <!-- VIP Info -->
-                            <div class="glass-panel rounded-xl p-5 border border-purple-500/30 bg-purple-500/5">
-                                <div class="flex items-center space-x-2 mb-2">
-                                    <h3 class="font-bold text-purple-400">Press & VIP Preview</h3>
-                                    <span class="px-2 py-0.5 rounded text-xs bg-purple-500/20 text-purple-400 border border-purple-500/30">INVITE ONLY</span>
+                            <!-- VIP Info - NOW CLICKABLE -->
+                            <a href="#vip-info" class="block glass-panel rounded-xl p-5 border border-purple-500/30 bg-purple-500/5 hover:bg-purple-500/10 transition-colors cursor-pointer group">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h3 class="font-bold text-purple-400 group-hover:text-purple-300">Press & VIP Preview</h3>
+                                    <i class="fas fa-arrow-right text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity"></i>
                                 </div>
+                                <span class="inline-block px-2 py-0.5 rounded text-xs bg-purple-500/20 text-purple-400 border border-purple-500/30 mb-2">INVITE ONLY</span>
                                 <p class="text-sm text-gray-400">6:00 PM early access for credentialed press and VIP guests.</p>
-                            </div>
+                                <p class="text-xs text-purple-400 mt-2">Click for details →</p>
+                            </a>
                         </div>
 
                         <!-- Capacity Indicator -->
@@ -366,6 +444,37 @@
                 </div>
             </div>
         </main>
+
+        <!-- VIP Info Section (Target for link) -->
+        <section id="vip-info" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+            <div class="glass-panel rounded-2xl p-8 border border-purple-500/30 bg-purple-500/5">
+                <h2 class="text-2xl font-display font-bold mb-4 text-purple-400">VIP & Press Access</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="font-semibold mb-2">Early Entry (6:00 PM)</h3>
+                        <p class="text-gray-300 text-sm mb-4">Get exclusive first look at the collections before doors open to the public. Network with designers and sponsors in an intimate setting.</p>
+                        <ul class="text-sm text-gray-400 space-y-1">
+                            <li><i class="fas fa-check text-purple-400 mr-2"></i>Priority seating</li>
+                            <li><i class="fas fa-check text-purple-400 mr-2"></i>Meet & greet opportunities</li>
+                            <li><i class="fas fa-check text-purple-400 mr-2"></i>Complimentary champagne</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold mb-2">How to Get VIP Access</h3>
+                        <p class="text-gray-300 text-sm mb-4">VIP credentials are granted to:</p>
+                        <ul class="text-sm text-gray-400 space-y-1 mb-4">
+                            <li>• Approved media partners</li>
+                            <li>• Event sponsors</li>
+                            <li>• Industry partners</li>
+                            <li>• Special guests (by invitation)</li>
+                        </ul>
+                        <a href="#media-signup" class="inline-block px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium transition-colors">
+                            Apply for Media Credentials
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <!-- Sticky Mobile CTA -->
         <div class="fixed bottom-0 left-0 right-0 bg-black/90 border-t border-white/10 p-4 lg:hidden z-30">
@@ -426,6 +535,108 @@
             </div>
         </div>
 
+        <!-- COMP TICKETS VIEW - NEW -->
+        <div id="view-comps" class="view-section hidden space-y-6">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h2 class="text-2xl font-display font-bold">Comp & Special Pricing</h2>
+                    <p class="text-gray-400 text-sm">Manage complimentary tickets and custom pricing</p>
+                </div>
+                <button onclick="openCompModal()" class="px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-medium">
+                    <i class="fas fa-plus mr-2"></i>Add Guest
+                </button>
+            </div>
+
+            <!-- Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="comp-card rounded-xl p-4">
+                    <p class="text-gray-400 text-xs uppercase mb-1">Total Comped</p>
+                    <p class="text-2xl font-bold text-white" id="comp-total">0</p>
+                </div>
+                <div class="glass-panel rounded-xl p-4 border-l-2 border-green-500">
+                    <p class="text-gray-400 text-xs uppercase mb-1">Checked In</p>
+                    <p class="text-2xl font-bold text-green-400" id="comp-checked">0</p>
+                </div>
+                <div class="glass-panel rounded-xl p-4 border-l-2 border-amber-500">
+                    <p class="text-gray-400 text-xs uppercase mb-1">Special Price</p>
+                    <p class="text-2xl font-bold text-amber-400" id="comp-special-count">0</p>
+                </div>
+                <div class="glass-panel rounded-xl p-4 border-l-2 border-purple-500">
+                    <p class="text-gray-400 text-xs uppercase mb-1">Value</p>
+                    <p class="text-2xl font-bold text-purple-400" id="comp-value">$0</p>
+                </div>
+            </div>
+
+            <!-- Add Comp Form -->
+            <div class="glass-panel rounded-2xl p-6 border border-amber-500/30">
+                <h3 class="text-lg font-bold mb-4 text-amber-400">Quick Add Guest</h3>
+                <form id="comp-form" class="grid grid-cols-1 md:grid-cols-6 gap-4" onsubmit="addCompGuest(event)">
+                    <div class="md:col-span-2">
+                        <label class="block text-xs text-gray-400 mb-1">Full Name *</label>
+                        <input type="text" name="name" required class="w-full form-input rounded-lg px-4 py-2" placeholder="Guest Name">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs text-gray-400 mb-1">Email *</label>
+                        <input type="email" name="email" required class="w-full form-input rounded-lg px-4 py-2" placeholder="email@example.com">
+                    </div>
+                    <div class="md:col-span-1">
+                        <label class="block text-xs text-gray-400 mb-1">Type *</label>
+                        <select name="type" required class="w-full form-input rounded-lg px-4 py-2" onchange="togglePriceField(this.value)">
+                            <option value="comp">Free (Comp)</option>
+                            <option value="special">Special Price</option>
+                            <option value="vip">VIP Access</option>
+                            <option value="media">Media</option>
+                        </select>
+                    </div>
+                    <div class="md:col-span-1" id="price-field" style="display:none;">
+                        <label class="block text-xs text-gray-400 mb-1">Price ($)</label>
+                        <input type="number" name="price" min="0" max="30" class="w-full form-input rounded-lg px-4 py-2" placeholder="15">
+                    </div>
+                    <div class="md:col-span-6">
+                        <label class="block text-xs text-gray-400 mb-1">Notes (Optional)</label>
+                        <input type="text" name="notes" class="w-full form-input rounded-lg px-4 py-2" placeholder="Reason for comp, relationship, etc.">
+                    </div>
+                    <div class="md:col-span-6">
+                        <button type="submit" class="px-6 py-2 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-medium">
+                            <i class="fas fa-plus mr-2"></i>Add to Guest List
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Guest List -->
+            <div class="glass-panel rounded-2xl p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold">Guest List</h3>
+                    <div class="flex space-x-2">
+                        <button onclick="filterComps('all')" class="px-3 py-1 rounded text-xs bg-white/10 hover:bg-white/20">All</button>
+                        <button onclick="filterComps('comp')" class="px-3 py-1 rounded text-xs bg-white/10 hover:bg-white/20">Comp Only</button>
+                        <button onclick="filterComps('special')" class="px-3 py-1 rounded text-xs bg-white/10 hover:bg-white/20">Special Price</button>
+                        <button onclick="exportCompList()" class="px-3 py-1 rounded text-xs bg-amber-600 hover:bg-amber-700 text-white">
+                            <i class="fas fa-download mr-1"></i>Export
+                        </button>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="text-xs text-gray-400 uppercase border-b border-white/10">
+                            <tr>
+                                <th class="pb-3">Name</th>
+                                <th class="pb-3">Email</th>
+                                <th class="pb-3">Type</th>
+                                <th class="pb-3">Price</th>
+                                <th class="pb-3">Status</th>
+                                <th class="pb-3">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm" id="comp-table">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <!-- Media View -->
         <div id="view-media" class="view-section hidden space-y-6">
             <div class="flex justify-between items-center">
@@ -470,7 +681,21 @@
             </div>
         </div>
 
-        <!-- Other admin views (dashboard, checkin, admin) would go here -->
+        <!-- Other admin views placeholders -->
+        <div id="view-dashboard" class="view-section hidden">
+            <h2 class="text-2xl font-display font-bold mb-4">Analytics Dashboard</h2>
+            <p class="text-gray-400">Detailed analytics coming soon...</p>
+        </div>
+        
+        <div id="view-checkin" class="view-section hidden">
+            <h2 class="text-2xl font-display font-bold mb-4">Check-In Scanner</h2>
+            <p class="text-gray-400">QR code scanner integration coming soon...</p>
+        </div>
+        
+        <div id="view-admin" class="view-section hidden">
+            <h2 class="text-2xl font-display font-bold mb-4">Admin Settings</h2>
+            <p class="text-gray-400">Configuration options coming soon...</p>
+        </div>
         
     </main>
 
@@ -478,11 +703,12 @@
         // Configuration
         const CONFIG = {
             sheetsUrl: 'https://script.google.com/macros/s/AKfycbwW-AsjHqP_8Wot_nhXdX1FpiUegEGDRO4FMT-IuzdIxdc6HTGspLiQLeP_wonUVRJjZQ/exec',
-            password: 'dmr2026' // Change this!
+            password: 'dmr2026'
         };
 
         let isAdmin = false;
         let mediaRequests = [];
+        let compGuests = [];
 
         // Check for saved login
         if (localStorage.getItem('fwsac_admin') === 'true') {
@@ -544,6 +770,7 @@
             updateTime();
             setInterval(updateTime, 1000);
             syncAllData();
+            loadCompData(); // Load comp data
         }
 
         function logout() {
@@ -592,6 +819,174 @@
             icon.classList.remove('sync-spin');
         }
 
+        // COMP TICKET FUNCTIONS - NEW
+        function togglePriceField(type) {
+            const priceField = document.getElementById('price-field');
+            if (type === 'special') {
+                priceField.style.display = 'block';
+            } else {
+                priceField.style.display = 'none';
+            }
+        }
+
+        function addCompGuest(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            
+            const guest = {
+                id: Date.now(),
+                name: formData.get('name'),
+                email: formData.get('email'),
+                type: formData.get('type'),
+                price: formData.get('type') === 'special' ? parseFloat(formData.get('price')) || 0 : 0,
+                notes: formData.get('notes') || '',
+                status: 'confirmed',
+                checkedIn: false,
+                addedAt: new Date().toISOString()
+            };
+            
+            compGuests.push(guest);
+            saveCompData();
+            renderCompTable();
+            updateCompStats();
+            form.reset();
+            document.getElementById('price-field').style.display = 'none';
+            
+            // Show success notification
+            alert(`Added ${guest.name} to guest list!`);
+        }
+
+        function renderCompTable(filter = 'all') {
+            const tbody = document.getElementById('comp-table');
+            let filtered = compGuests;
+            
+            if (filter === 'comp') filtered = compGuests.filter(g => g.type === 'comp');
+            if (filter === 'special') filtered = compGuests.filter(g => g.type === 'special');
+            
+            tbody.innerHTML = filtered.map(guest => `
+                <tr class="border-b border-white/5 hover:bg-white/5">
+                    <td class="py-3">
+                        <div class="font-medium">${guest.name}</div>
+                        ${guest.notes ? `<div class="text-xs text-gray-500">${guest.notes}</div>` : ''}
+                    </td>
+                    <td class="py-3 text-gray-400">${guest.email}</td>
+                    <td class="py-3">
+                        <span class="px-2 py-1 rounded text-xs ${getTypeBadgeClass(guest.type)}">
+                            ${guest.type.toUpperCase()}
+                        </span>
+                    </td>
+                    <td class="py-3">
+                        ${guest.price > 0 ? `<span class="text-amber-400">$${guest.price}</span>` : '<span class="text-green-400">FREE</span>'}
+                    </td>
+                    <td class="py-3">
+                        <span class="px-2 py-1 rounded text-xs ${guest.checkedIn ? 'bg-green-500/20 text-green-400' : 'bg-amber-500/20 text-amber-400'}">
+                            ${guest.checkedIn ? '✓ Checked In' : '⏳ Not Arrived'}
+                        </span>
+                    </td>
+                    <td class="py-3">
+                        <button onclick="toggleCheckIn(${guest.id})" class="text-blue-400 hover:text-blue-300 text-sm mr-3">
+                            ${guest.checkedIn ? 'Undo' : 'Check In'}
+                        </button>
+                        <button onclick="deleteComp(${guest.id})" class="text-red-400 hover:text-red-300 text-sm">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function getTypeBadgeClass(type) {
+            const classes = {
+                'comp': 'bg-green-500/20 text-green-400 border border-green-500/30',
+                'special': 'bg-amber-500/20 text-amber-400 border border-amber-500/30',
+                'vip': 'bg-purple-500/20 text-purple-400 border border-purple-500/30',
+                'media': 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
+            };
+            return classes[type] || 'bg-gray-500/20 text-gray-400';
+        }
+
+        function updateCompStats() {
+            document.getElementById('comp-total').textContent = compGuests.length;
+            document.getElementById('comp-checked').textContent = compGuests.filter(g => g.checkedIn).length;
+            document.getElementById('comp-special-count').textContent = compGuests.filter(g => g.type === 'special').length;
+            
+            const totalValue = compGuests.reduce((sum, g) => sum + (g.price || 0), 0);
+            document.getElementById('comp-value').textContent = `$${totalValue}`;
+            
+            // Update badge
+            const badge = document.getElementById('comps-badge');
+            if (compGuests.length > 0) {
+                badge.textContent = compGuests.length;
+                badge.classList.remove('hidden');
+            }
+        }
+
+        function toggleCheckIn(id) {
+            const guest = compGuests.find(g => g.id === id);
+            if (guest) {
+                guest.checkedIn = !guest.checkedIn;
+                saveCompData();
+                renderCompTable();
+                updateCompStats();
+            }
+        }
+
+        function deleteComp(id) {
+            if (confirm('Are you sure you want to remove this guest?')) {
+                compGuests = compGuests.filter(g => g.id !== id);
+                saveCompData();
+                renderCompTable();
+                updateCompStats();
+            }
+        }
+
+        function filterComps(type) {
+            renderCompTable(type);
+        }
+
+        function exportCompList() {
+            const csv = "Name,Email,Type,Price,Status,Notes\n" + 
+                compGuests.map(g => `${g.name},${g.email},${g.type},${g.price},${g.checkedIn ? 'Checked In' : 'Not Arrived'},"${g.notes}"`).join("\n");
+            downloadCSV(csv, 'comp-guest-list.csv');
+        }
+
+        function saveCompData() {
+            localStorage.setItem('fwsac_comp_guests', JSON.stringify(compGuests));
+        }
+
+        function loadCompData() {
+            const saved = localStorage.getItem('fwsac_comp_guests');
+            if (saved) {
+                compGuests = JSON.parse(saved);
+                renderCompTable();
+                updateCompStats();
+            }
+        }
+
+        // MEDIA FUNCTIONS
+        function submitMediaForm(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            
+            const media = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                outlet: formData.get('outlet'),
+                role: formData.get('role'),
+                website: formData.get('website'),
+                examples: formData.get('examples'),
+                status: 'pending',
+                submittedAt: new Date().toISOString()
+            };
+            
+            // In real implementation, send to Google Sheets
+            mediaRequests.push(media);
+            alert('Thank you! Your media application has been submitted for review.');
+            form.reset();
+        }
+
         function updateMediaStats() {
             const total = mediaRequests.length;
             const pending = mediaRequests.filter(m => m.status === 'pending').length;
@@ -635,20 +1030,42 @@
 
         async function approveMedia(idx) {
             const email = mediaRequests[idx].email;
-            // In real implementation, call Apps Script to update sheet and send email
             mediaRequests[idx].status = 'approved';
+            
+            // Add to comp list as media type
+            const media = mediaRequests[idx];
+            compGuests.push({
+                id: Date.now(),
+                name: media.name,
+                email: media.email,
+                type: 'media',
+                price: 0,
+                notes: `Media: ${media.outlet}`,
+                status: 'confirmed',
+                checkedIn: false,
+                addedAt: new Date().toISOString()
+            });
+            
+            saveCompData();
             updateMediaStats();
             renderMediaTable();
+            updateCompStats();
+            
+            alert(`Approved ${media.name}! Added to comp list.`);
         }
 
         function exportMediaList() {
             const csv = "Name,Email,Outlet,Role,Status\n" + 
                 mediaRequests.map(m => `${m.name},${m.email},${m.outlet},${m.role},${m.status}`).join("\n");
+            downloadCSV(csv, 'media-list.csv');
+        }
+
+        function downloadCSV(csv, filename) {
             const blob = new Blob([csv], { type: 'text/csv' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'media-list.csv';
+            a.download = filename;
             a.click();
         }
 
