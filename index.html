@@ -105,67 +105,60 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-40 glass-panel border-b border-white/10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center space-x-4">
-                    <div class="w-10 h-10 bg-gradient-to-br from-amber-500 to-purple-600 rounded-lg flex items-center justify-center">
-                        <i class="fas fa-ticket-alt text-white text-lg"></i>
-                    </div>
-                    <div>
-                        <h1 class="font-display text-lg font-bold text-white">DMR Productions</h1>
-                        <p class="text-xs text-gray-400">Fashion Week Sacramento 2026</p>
-                    </div>
+<nav class="fixed top-0 w-full z-40 glass-panel border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <div class="flex items-center space-x-4">
+                <div class="w-10 h-10 bg-gradient-to-br from-amber-500 to-purple-600 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-ticket-alt text-white text-lg"></i>
                 </div>
-                
-                <!-- Public Nav -->
-                <div class="public-only flex items-center space-x-2">
-                    <a href="#tickets" class="px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-medium transition-colors">
-                        <i class="fas fa-ticket-alt mr-2"></i>Get Tickets $30
-                    </a>
+                <div>
+                    <h1 class="font-display text-lg font-bold text-white">DMR Productions</h1>
+                    <p class="text-xs text-gray-400">Fashion Week Sacramento 2026</p>
                 </div>
+            </div>
 
-                <!-- Admin Nav (hidden until login) -->
-                <div class="admin-only hidden md:flex items-center space-x-2">
-                    <button onclick="switchView('live-sales')" class="nav-btn active px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
-                        <i class="fas fa-shopping-cart"></i><span>Live Sales</span>
-                        <span class="w-2 h-2 rounded-full bg-green-500 live-indicator"></span>
-                    </button>
-                    <button onclick="switchView('comps')" class="nav-btn px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
-                        <i class="fas fa-gift"></i><span>Comp List</span>
-                        <span id="comps-badge" class="hidden px-2 py-0.5 rounded-full bg-amber-500 text-black text-xs font-bold">0</span>
-                    </button>
-                    <button onclick="switchView('media')" class="nav-btn px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
-                        <i class="fas fa-newspaper"></i><span>Media</span>
-                        <span id="media-badge" class="hidden px-2 py-0.5 rounded-full bg-amber-500 text-black text-xs font-bold">0</span>
-                    </button>
-                    <button onclick="switchView('dashboard')" class="nav-btn px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
-                        <i class="fas fa-chart-line"></i><span>Analytics</span>
-                    </button>
-                    <button onclick="switchView('checkin')" class="nav-btn px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
-                        <i class="fas fa-qrcode"></i><span>Check-In</span>
-                    </button>
-                    <button onclick="switchView('admin')" class="nav-btn px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
-                        <i class="fas fa-cog"></i><span>Admin</span>
-                    </button>
-                    <button onclick="logout()" class="px-3 py-2 rounded-lg text-red-400 hover:text-red-300 text-sm" title="Logout">
-                        <i class="fas fa-sign-out-alt"></i>
-                    </button>
-                </div>
-                
-                <div class="flex items-center space-x-4 admin-only">
-                    <button onclick="syncAllData()" class="flex items-center space-x-2 text-sm text-gray-400 hover:text-white transition-colors" id="sync-btn">
-                        <i class="fas fa-sync" id="sync-icon"></i>
-                        <span id="last-sync">Sync</span>
-                    </button>
-                    <div class="text-right hidden sm:block">
-                        <p class="text-sm font-medium text-white" id="current-time">--:--</p>
-                        <p class="text-xs text-gray-400" id="current-date">--</p>
-                    </div>
+            <!-- Admin Nav (hidden until login) -->
+            <div class="admin-only hidden md:flex items-center space-x-2">
+                <button onclick="switchView('live-sales')" class="nav-btn active px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
+                    <i class="fas fa-shopping-cart"></i><span>Live Sales</span>
+                    <span class="w-2 h-2 rounded-full bg-green-500 live-indicator"></span>
+                </button>
+                <button onclick="switchView('comps')" class="nav-btn px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
+                    <i class="fas fa-gift"></i><span>Comp List</span>
+                    <span id="comps-badge" class="hidden px-2 py-0.5 rounded-full bg-amber-500 text-black text-xs font-bold">0</span>
+                </button>
+                <button onclick="switchView('media')" class="nav-btn px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
+                    <i class="fas fa-newspaper"></i><span>Media</span>
+                    <span id="media-badge" class="hidden px-2 py-0.5 rounded-full bg-amber-500 text-black text-xs font-bold">0</span>
+                </button>
+                <button onclick="switchView('dashboard')" class="nav-btn px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
+                    <i class="fas fa-chart-line"></i><span>Analytics</span>
+                </button>
+                <button onclick="switchView('checkin')" class="nav-btn px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
+                    <i class="fas fa-qrcode"></i><span>Check-In</span>
+                </button>
+                <button onclick="switchView('admin')" class="nav-btn px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-colors flex items-center space-x-2">
+                    <i class="fas fa-cog"></i><span>Admin</span>
+                </button>
+                <button onclick="logout()" class="px-3 py-2 rounded-lg text-red-400 hover:text-red-300 text-sm" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+            
+            <div class="flex items-center space-x-4 admin-only">
+                <button onclick="syncAllData()" class="flex items-center space-x-2 text-sm text-gray-400 hover:text-white transition-colors" id="sync-btn">
+                    <i class="fas fa-sync" id="sync-icon"></i>
+                    <span id="last-sync">Sync</span>
+                </button>
+                <div class="text-right hidden sm:block">
+                    <p class="text-sm font-medium text-white" id="current-time">--:--</p>
+                    <p class="text-xs text-gray-400" id="current-date">--</p>
                 </div>
             </div>
         </div>
-    </nav>
+    </div>
+</nav>
 
     <!-- PUBLIC VIEW: Ticket Sales Page -->
     <div id="public-view" class="public-only pt-16">
